@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <title>Cancer Detection</title>
+  <link rel="shortcut icon" href="/static/Lungs.png">
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="../static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+  <link href="../static/css2/style.css " type="text/css" rel="stylesheet" media="screen,projection" />
+</head>
+
+<body>
+  <nav role="navigation" style="background: #95afc0 ">
+    <div class="nav-wrapper container"
+      style="display: flex;align-items: center;justify-content: center; padding-bottom: 20px">
+      <h4>Lung Cancer Analyzation</h4>
+    </div>
+  </nav>
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+      <div class="row center">
+        <h6 class="header col s12 light">Level Status(0= Low , 1 = Average , 2 = Critical)</h6>
+      </div>
+      <div class="row">
+        <div class="row center">
+          <div><span
+              style="background: #7ed6df; font-size: 20px; border-radius: 5px; padding: 5px 10px 5px 10px; color: #fff">
+              Result :  {{pred}}</span></div>
+        </div>
+
+        <form action='/predict' method="POST" class="col s12">
+          <div class="input-field col s4">
+            <label for="gender">Gender (Male/Female) </label>
+            <br><br>
+            <select id="gender" name="GENDER" required="required">
+              <option value="" disabled selected>Gender</option>
+              <option value="0">Male</option>
+              <option value="1">Female</option>
+            </select>
+          </div>
+          <div class="input-field col s4" style="margin-top: 37px">
+            <label for="age" style="top: 7px;font-size: 17px;">Age</label>
+            <br>
+            <input placeholder="Your Age" name="AGE" id="age" type="text" class="validate" required="required">
+          </div>
+          <div class="input-field col s4">
+            <label>Smoking Level</label>
+            <br><br>
+            <select id="smoke" name="SMOKING" required="required">
+              <option value="" disabled selected> Smoking Level</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
+          </div>
+          <div class="input-field col s3">
+            <label>Yellow Finger Level</label>
+            <br><br>
+            <select id="yelfinger" name="YELLOW_FINGERS" required="required">
+              <option value="" disabled selected>Yellow Finger</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
+          </div>
+          <div class="input-field col s3">
+            <label>Anxiety Level</label>
+            <br><br>
+            <select id="anxiety" name="Anxiety" required="required">
+              <option value="" disabled selected>Anxiety Level</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
+          </div>
+          <div class="input-field col s3">
+            <label>Peer-Pressure Level</label>
+            <br><br>
+            <select id="peer" name="PEER_PRESSURE" required="required">
+              <option value="" disabled selected>Peer-Pressure Level</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
+          </div>
+          <div class="input-field col s3">
+            <label>Chronic Disease Level</label>
+            <br><br>
+            <select id="chronic" name="CHRONIC DISEASE" required="required">
+              <option value="" disabled selected>Chronic Disease Level</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
+          </div>
+          <div class="input-field col s3">
+            <label>Fatigue Level</label>
+            <br><br>
+            <select id="fatigue" name="FATIGUE" required="required">
+              <option value="" disabled selected>Fatigue Level</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
+          </div>
+          <div class="input-field col s3">
+            <label>Allergy Level</label>
+            <br><br>
+            <select id="allergy" name="ALLERGY" required="required">
+              <option value="" disabled selected>Allergy Level</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
+          </div>
+          <div class="input-field col s3">
+            <label>Wheezing Level</label>
+            <br><br>
+            <select id="wheeze" name="WHEEZING" required="required">
+              <option value="" disabled selected>Wheezing Level</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
+          </div>
+          <div class="input-field col s3">
+            <label>Alcohol Level</label>
+            <br><br>
+            <select id="alcohol" name="ALCOHOL CONSUMING" required="required">
+              <option value="" disabled selected>Alcohol Level</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
+          </div>
+          <div class="input-field col s3">
+            <label>Cough Level</label>
+            <br><br>
+            <select id="cough" name="COUGHING" required="required">
+              <option value="" disabled selected>Cough Level</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
+          </div>
+          <div class="input-field col s3">
+            <label>Shortness of Breathing</label>
+            <br><br>
+            <select id="breathing" name="SHORTNESS OF BREATH" required="required">
+              <option value="" disabled selected>Shortness of Breathing</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
+          </div>
+          <div class="input-field col s3">
+            <label>Swallowing Level</label>
+            <br><br>
+            <select id="swallowing" name="SWALLOWING DIFFICULTY" required="required">
+              <option value="" disabled selected>Swallowing Level</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
+          </div>
+          <div class="input-field col s3">
+            <label>Chest Pain</label>
+            <br><br>
+            <select id="chest" name="CHEST PAIN" required="required">
+              <option value="" disabled selected>Chest Pain</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
+          </div>
+          <br><br><br>
+          <div class="row center">
+
+            <button type="submit" class="btn-large waves-effect waves-light " style="background: #95afc0">Predict Cancer
+              Status</button>
+          </div>
+    
+          </form>
+      </div>
+    </div>
+    <br>
+  </div>
+  </div>
+
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="../static/js/materialize.js"></script>
+  <script src="../static/js/init.js"></script>
+</body>
+
+</html>
